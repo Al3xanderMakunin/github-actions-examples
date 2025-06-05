@@ -1,0 +1,27 @@
+name: Sixteenth Workflow
+on: push
+
+jobs:
+  testing-matrix-job:
+    continue-on-error: true
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [12, 14, 18]
+        include:
+          - os: macos-latest
+            node-version: 17
+          - os: ubuntu-latest
+            status: active
+        exclude:
+          - os: ubuntu-latest
+            node-version: 14
+      fail-fast: false
+      max-parallel: 2
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: node -v
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: node -v

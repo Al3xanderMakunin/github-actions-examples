@@ -1,0 +1,12 @@
+name: Concurrency Testing
+on: workflow_dispatch
+concurrency: 
+  group: concurrency-testing
+  cancel-in-progress: true
+jobs:
+  test-timeout:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Some Step
+        run: sleep 50
+        timeout-minutes: 1

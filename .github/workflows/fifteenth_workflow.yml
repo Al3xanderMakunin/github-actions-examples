@@ -1,0 +1,43 @@
+name: Fifteenth Workflow
+on: push
+
+jobs:
+  first-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Math expression
+        run: expr 2 + 2 > math-result.txt
+      - name: Upload result file
+        uses: actions/upload-artifact@v3
+        with:
+          name: math-result
+          path: math-result.txt
+  another-job:
+    runs-on: ubuntu-latest
+    needs: first-jobs
+    steps:
+      - name: Download file
+        uses: actions/download-artifact@v3
+        with:
+          name: math-result
+      - name: Math Expression
+        run: |
+          value=`cat math-result.txt`
+          expr $value \* 2 > math-result.txt
+      - name: Upload result file
+        uses: actions/upload-artifact@v3
+        with:
+          name: math-result
+          path: math-result.txt
+  second-job:
+    runs-on: ubuntu-latest
+    needs: another-job
+    steps:
+      - name: Download file
+        uses: actions/download-artifact@v3
+        with:
+          name: math-result
+      - name: Print File
+        run: |
+          value=`cat math-result.txt`
+          echo $value

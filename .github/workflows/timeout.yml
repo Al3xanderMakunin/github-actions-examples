@@ -1,0 +1,10 @@
+name: Test Timeout
+on: push
+
+jobs:
+  test-timeout:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Some Step
+        run: sleep 10
+        timeout-minutes: 1

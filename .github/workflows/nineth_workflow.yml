@@ -1,0 +1,11 @@
+name: Nineth Workflow
+on: 
+  repository_dispatch:
+    types: [test]
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Vars
+        run: echo ${{ github.event.client_payload.titleTest }}

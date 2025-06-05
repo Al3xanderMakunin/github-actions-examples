@@ -1,0 +1,16 @@
+name: Ten Workflow
+on: [push]
+run-name: "Display Context Info"
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Contexts and Expressions
+        id: context-expression
+        run: |
+          echo '${{ toJson(github) }}'
+          echo '${{ toJson(runner) }}'
+          echo '${{ toJson(job) }}'
+          echo '${{ toJson(steps) }}'
+      - name: Show Steps Context
+        run: echo '${{ toJson(steps) }}'

@@ -1,0 +1,26 @@
+name: Docker Test
+on: push
+
+jobs:
+  test-docker-container:
+    runs-on: ubuntu-latest
+    services:
+      customMysql:
+        image: mysql
+    container:
+      image: node:21-alpine3.17
+      env: 
+        NODE_ENV: develpment
+      ports:
+        - 80
+    steps:
+      - name: Display service image
+        run: echo '${{ toJSON(job.services) }}'
+      - name: Display Node Version
+        run: |
+          node -v
+          cat /etc/os-release
+      - name: Print new Node Version
+        uses: docker://node:18-buster-slim
+        with:
+          args: -v

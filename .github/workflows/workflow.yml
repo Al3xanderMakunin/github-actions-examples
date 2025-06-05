@@ -1,0 +1,26 @@
+name: Reusable Workflow
+on:
+  workflow_call:
+    inputs:
+      title:
+        description: "Custom Title"
+        type: string
+        default: "Testing text title"
+        required: false
+    outputs:
+      date:
+        value: ${{ jobs.generate-output.outputs.date }}
+
+jobs:
+  console-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Title
+        run: echo '${{ inputs.title }}'
+  generate-output:
+    runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.date-step.outputs.date }}
+    steps:
+      - run: echo "date=$(date)" >> $GITHUB_OUTPUT
+        id: date-step

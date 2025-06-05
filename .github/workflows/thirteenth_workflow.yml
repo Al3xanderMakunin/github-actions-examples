@@ -1,0 +1,29 @@
+name: Thirteenth Workflow
+on: push
+
+jobs:
+  # failure() success() always() cancelled()
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failure Step
+        id: error-step
+        run: exit 1
+      - name: Runs on Canceled
+        if: ${{ cancelled() }}
+        run: echo "Runs on Canceled"
+      - name: Runs on any case
+        if: ${{ always() }}
+        run: echo "Runs on any case"
+      - name: Runs on Success
+        if: ${{ success() }}
+        run: echo "Runs on Success"
+      - name: Runs on Failure
+        if: ${{ failure() && steps.error-step.conclusion == 'failure' }}
+        run: echo "Runs on Failure"
+  second-job:
+    runs-on: ubuntu-latest
+    needs: job
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Job was failed"

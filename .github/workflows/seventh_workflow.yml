@@ -1,0 +1,13 @@
+name: Seventh Workflow
+on: 
+  schedule:
+    - cron: "*/5 * * * *"
+
+jobs:
+  run-first-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Event Vars
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
